@@ -5,7 +5,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
@@ -15,17 +15,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // Set your configuration on the auth object
         auth.inMemoryAuthentication()
                 .withUser("subhasish")
-                .password("test123")
+                .password("$2a$10$HA9tbjN1BXL9EHTply1MKunMTsSrr/c2gKHD1x6k3lwCqIdHygusi")
                 .roles("USER")
                 .and()
                 .withUser("user")
-                .password("user")
+                .password("$2a$10$JnuP8EkfOD10K.2cageBMOaqEWoeyNlgUCildQLJpXV2U0sqdtapG")
                 .roles("ADMIN");
+        //username subhasish password test123
+        //username user password user
     }
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+        //return NoOpPasswordEncoder.getInstance();
+    	return new BCryptPasswordEncoder();
     }
 
     @Override
